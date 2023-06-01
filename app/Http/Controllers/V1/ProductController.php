@@ -5,15 +5,18 @@ namespace App\Http\Controllers\V1;
 use App\Models\V1\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
     public function index()
     {
-        $teste = DB::select("SELECT * FROM products");
-        dd($teste);
-     
+        $products = Product::get();
+
+        if ($products->isEmpty()) {
+            return response()->json([], 204);
+        }
+
+        return response()->json($products);
     }
 
     public function create()
