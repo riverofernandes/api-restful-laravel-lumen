@@ -123,10 +123,10 @@
 }
 ```
 
-Criar um novo cliente
-Rota: http://localhost/customers
-Método: POST
-Dados de exemplo:
+## Criar um novo cliente
+- Rota: http://localhost/customers
+- Método: POST
+- Dados de exemplo:
 
 ```json
 {
