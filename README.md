@@ -65,11 +65,11 @@
 ## Editar um Pedido
 
 - Endpoint: PUT http://localhost/products/{id}
-# Deletar um Produto
+## Deletar um Produto
 - Endpoint: DELETE http://localhost/products/{id}
 
 
-# Listar Clientes
+## Listar Clientes
 - Endpoint: GET http://localhost/customers
 - Exemplo de resultado:
 
@@ -234,7 +234,7 @@ Dados de exemplo:
 ]
 ```
 
-# Listar um pedido
+## Listar um pedido
 - Rota: http://localhost/requests/{id}
 - Método: GET
 - Exemplo de resposta:
