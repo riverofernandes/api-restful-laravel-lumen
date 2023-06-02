@@ -5,10 +5,12 @@ namespace App\Http\Controllers\V1;
 use App\Models\V1\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\URL;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index(): JsonResponse
     {
         $products = Product::get();
 
@@ -19,25 +21,57 @@ class ProductController extends Controller
         return response()->json($products);
     }
 
-    public function create()
+    public function store(Request $request): JsonResponse
     {
-        return view('nome-do-modelo.create');
+        $this->validate($request, [
+            'name'  => 'required',
+            'price' => 'required|numeric',
+            'image' => 'required|image|mimes:png,jpg,jpeg'
+        ]);
+
+        $file = $request->file('image');
+        $name = $file->getBasename() . '.' . $file->getClientOriginalExtension();
+        $file->move('upload/', $name);
+
+        $product = new Product;
+        $product->name = $request->name;
+        $product->price = $request->price;
+        $product->image =  URL::asset('upload/' . $name);
+        $product->save();
+
+        return response()->json(['message' => 'Registro salvo com sucesso'], 201);
     }
 
-    public function show($id)
+    public function show(int $id): JsonResponse
     {
-        $registro = Product::findOrFail($id);
-        return view('nome-do-modelo.show', compact('registro'));
+        return response()->json(Product::findOrFail($id));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $id): JsonResponse
     {
-        // Valide e atualize os dados do formulário
+        $this->validate($request, [
+            'price' => 'numeric',
+            'image' => 'image|mimes:png,jpg,jpeg'
+        ]);
+        $product = Product::findOrFail($id);
+        $product->name = $request->name;
+        $product->price = $request->price;
+
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $name = $file->getBasename() . '.' . $file->getClientOriginalExtension();
+            $file->move('upload/', $name);
+            $product->image = URL::asset('upload/' . $name);
+        }
+        $product->save();
+
+        return response()->json(['message' => 'Registro atualizado com sucesso'], 200);
     }
 
-    public function destroy($id)
+    public function destroy(int $id): JsonResponse
     {
-        // Exclua o registro
+        $product = Product::findOrFail($id);
+        $product->delete();
+        return response()->json(['message' => 'Registro excluído com sucesso'], 200);
     }
-
 }
