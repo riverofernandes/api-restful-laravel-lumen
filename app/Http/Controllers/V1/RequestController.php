@@ -58,7 +58,7 @@ class RequestController extends Controller
     
         $responseData = [
             'id' => $request->id,
-            'customer_id' => $request->customer_id,
+            'customer_id' => $request->customer,
             'products' => $products,
             'created_at' => $request->created_at,
             'updated_at' => $request->updated_at,

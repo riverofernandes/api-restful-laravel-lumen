@@ -1,26 +1,288 @@
-# Lumen PHP Framework
+# Documentação do Projeto
 
-[![Build Status](https://travis-ci.org/laravel/lumen-framework.svg)](https://travis-ci.org/laravel/lumen-framework)
-[![Total Downloads](https://img.shields.io/packagist/dt/laravel/lumen-framework)](https://packagist.org/packages/laravel/lumen-framework)
-[![Latest Stable Version](https://img.shields.io/packagist/v/laravel/lumen-framework)](https://packagist.org/packages/laravel/lumen-framework)
-[![License](https://img.shields.io/packagist/l/laravel/lumen)](https://packagist.org/packages/laravel/lumen-framework)
+## Configuração do Ambiente
 
-Laravel Lumen is a stunningly fast PHP micro-framework for building web applications with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Lumen attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as routing, database abstraction, queueing, and caching.
+1. Execute o comando `docker-compose up --build` para criar o ambiente.
+2. Execute o comando `php artisan migrate` para migrar as tabelas.
+3. Execute o comando `php artisan db:seed --class=CustomersTableSeeder` para popular a tabela de clientes.
+4. Execute o comando `php artisan db:seed --class=ProductsTableSeeder` para popular a tabela de produtos.
 
-> **Note:** In the years since releasing Lumen, PHP has made a variety of wonderful performance improvements. For this reason, along with the availability of [Laravel Octane](https://laravel.com/docs/octane), we no longer recommend that you begin new projects with Lumen. Instead, we recommend always beginning new projects with [Laravel](https://laravel.com).
+## Listar Produtos
 
-## Official Documentation
+-   Endpoint: `GET http://localhost/products`
+-   Exemplo de resultado:
 
-Documentation for the framework can be found on the [Lumen website](https://lumen.laravel.com/docs).
+```json
+[
+    {
+        "id": 2,
+        "name": "teste",
+        "price": 2.5,
+        "image": "http://localhost/upload/phpF1QeAf.jpg",
+        "created_at": "2023-06-02T01:57:12.000000Z",
+        "updated_at": "2023-06-02T01:57:12.000000Z"
+    },
+    {
+        "id": 3,
+        "name": "Gladyce Barrows",
+        "price": 11,
+        "image": "https://via.placeholder.com/200x200.png/008800?text=non",
+        "created_at": "2023-06-02T03:10:04.000000Z",
+        "updated_at": "2023-06-02T03:10:04.000000Z"
+    }
+]
+```
 
-## Contributing
+## Obter Detalhes de um Produto
 
-Thank you for considering contributing to Lumen! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+-   Endpoint: GET http://localhost/products/{id}
+-   Exemplo de resultado:
 
-## Security Vulnerabilities
+```json
+{
+    "id": 2,
+    "name": "teste",
+    "price": 2.5,
+    "image": "http://localhost/upload/phpF1QeAf.jpg",
+    "created_at": "2023-06-02T01:57:12.000000Z",
+    "updated_at": "2023-06-02T01:57:12.000000Z"
+}
+```
 
-If you discover a security vulnerability within Lumen, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
+## Criar um Novo Produto
 
-## License
+-   Endpoint: POST http://localhost/products
+-   Exemplo de dados a serem enviados:
 
-The Lumen framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```json
+{
+    "name": "Queijo",
+    "price": 10.0,
+    "image": "upload da imagem"
+}
+```
+
+## Editar um Pedido
+
+- Endpoint: PUT http://localhost/products/{id}
+# Deletar um Produto
+- Endpoint: DELETE http://localhost/products/{id}
+
+
+# Listar Clientes
+- Endpoint: GET http://localhost/customers
+- Exemplo de resultado:
+
+```json
+[
+    {
+        "id": 2,
+        "name": "Miss Carlotta Kohler MD",
+        "email": "pierre.olson@example.org",
+        "phone": "224-853-7198",
+        "birth": "2017-08-12",
+        "address": "5976 Selina Rapids Apt. 021",
+        "complement": "Suite 318",
+        "district": "Falkland Islands (Malvinas)",
+        "zip": "94570-2357",
+        "created_at": "2023-06-02T13:31:54.000000Z",
+        "updated_at": "2023-06-02T13:31:54.000000Z"
+    },
+    {
+        "id": 3,
+        "name": "Helmer Brown",
+        "email": "ayana.homenick@example.net",
+        "phone": "830.446.0791",
+        "birth": "1996-01-04",
+        "address": "70975 Yost Ferry",
+        "complement": "Suite 269",
+        "district": "Gabon",
+        "zip": "05213",
+        "created_at": "2023-06-02T13:31:54.000000Z",
+        "updated_at": "2023-06-02T13:31:54.000000Z"
+    }
+]
+```
+## Listar um cliente
+- Rota: http://localhost/customers/{id}
+- Método: GET
+- Exemplo de resposta:
+```json
+{
+    "id": 2,
+    "name": "Miss Carlotta Kohler MD",
+    "email": "pierre.olson@example.org",
+    "phone": "224-853-7198",
+    "birth": "2017-08-12",
+    "address": "5976 Selina Rapids Apt. 021",
+    "complement": "Suite 318",
+    "district": "Falkland Islands (Malvinas)",
+    "zip": "94570-2357",
+    "created_at": "2023-06-02T13:31:54.000000Z",
+    "updated_at": "2023-06-02T13:31:54.000000Z"
+}
+```
+
+Criar um novo cliente
+Rota: http://localhost/customers
+Método: POST
+Dados de exemplo:
+
+```json
+{
+    "name": "Fulano",
+    "email": "fulano@gmail.com",
+    "phone": "1100000000",
+    "birth": "2020-06-01",
+    "address": "rua um dois tres",
+    "district": "sao paulo",
+    "zip": "02222020"
+}
+```
+
+## Editar um cliente
+- Rota: http://localhost/customers/{id}
+- Método: PUT
+
+## Deletar um cliente
+- Rota: http://localhost/customers/{id}
+- Método: DELETE
+
+## Listar pedidos
+- Rota: http://localhost/requests
+- Método: GET
+- Exemplo de resposta:
+
+```json
+[
+    {
+        "id": 1,
+        "customer": {
+            "id": 2,
+            "name": "Miss Carlotta Kohler MD",
+            "email": "pierre.olson@example.org",
+            "phone": "224-853-7198",
+            "birth": "2017-08-12",
+            "address": "5976 Selina Rapids Apt. 021",
+            "complement": "Suite 318",
+            "district": "Falkland Islands (Malvinas)",
+            "zip": "94570-2357",
+            "created_at": "2023-06-02T13:31:54.000000Z",
+            "updated_at": "2023-06-02T13:31:54.000000Z"
+        },
+        "products": [
+            {
+                "id": 2,
+                "name": "teste",
+                "price": 2.5,
+                "image": "http://localhost/upload/phpF1QeAf.jpg",
+                "created_at": "2023-06-02T01:57:12.000000Z",
+                "updated_at": "2023-06-02T01:57:12.000000Z",
+                "qtd": 1
+            },
+            {
+                "id": 3,
+                "name": "Gladyce Barrows",
+                "price": 11,
+                "image": "https://via.placeholder.com/200x200.png/008800?text=non",
+                "created_at": "2023-06-02T03:10:04.000000Z",
+                "updated_at": "2023-06-02T03:10:04.000000Z",
+                "qtd": 1
+            }
+        ],
+        "created_at": "2023-06-02T14:22:45.000000Z",
+        "updated_at": "2023-06-02T14:22:45.000000Z"
+    },
+    {
+        "id": 2,
+        "customer": {
+            "id": 2,
+            "name": "Miss Carlotta Kohler MD",
+            "email": "pierre.olson@example.org",
+            "phone": "224-853-7198",
+            "birth": "2017-08-12",
+            "address": "5976 Selina Rapids Apt. 021",
+            "complement": "Suite 318",
+            "district": "Falkland Islands (Malvinas)",
+            "zip": "94570-2357",
+            "created_at": "2023-06-02T13:31:54.000000Z",
+            "updated_at": "2023-06-02T13:31:54.000000Z"
+        },
+        "products": [
+            {
+                "id": 2,
+                "name": "teste",
+                "price": 2.5,
+                "image": "http://localhost/upload/phpF1QeAf.jpg",
+                "created_at": "2023-06-02T01:57:12.000000Z",
+                "updated_at": "2023-06-02T01:57:12.000000Z",
+                "qtd": 1
+            },
+            {
+                "id": 3,
+                "name": "Gladyce Barrows",
+                "price": 11,
+                "image": "https://via.placeholder.com/200x200.png/008800?text=non",
+                "created_at": "2023-06-02T03:10:04.000000Z",
+                "updated_at": "2023-06-02T03:10:04.000000Z",
+                "qtd": 1
+            }
+        ],
+        "created_at": "2023-06-02T14:23:03.000000Z",
+        "updated_at": "2023-06-02T14:23:03.000000Z"
+    }
+]
+```
+
+# Listar um pedido
+- Rota: http://localhost/requests/{id}
+- Método: GET
+- Exemplo de resposta:
+```json
+{
+    "id": 1,
+    "customer": {
+        "id": 2,
+        "name": "Miss Carlotta Kohler MD",
+        "email": "pierre.olson@example.org",
+        "phone": "224-853-7198",
+        "birth": "2017-08-12",
+        "address": "5976 Selina Rapids Apt. 021",
+        "complement": "Suite 318",
+        "district": "Falkland Islands (Malvinas)",
+        "zip": "94570-2357",
+        "created_at": "2023-06-02T13:31:54.000000Z",
+        "updated_at": "2023-06-02T13:31:54.000000Z"
+    },
+    "products": [
+        {
+            "id": 2,
+            "name": "teste",
+            "price": 2.5,
+            "image": "http://localhost/upload/phpF1QeAf.jpg",
+            "created_at": "2023-06-02T01:57:12.000000Z",
+            "updated_at": "2023-06-02T01:57:12.000000Z",
+            "qtd": 1
+        },
+        {
+            "id": 3,
+            "name": "Gladyce Barrows",
+            "price": 11,
+            "image": "https://via.placeholder.com/200x200.png/008800?text=non",
+            "created_at": "2023-06-02T03:10:04.000000Z",
+            "updated_at": "2023-06-02T03:10:04.000000Z",
+            "qtd": 1
+        }
+    ],
+    "created_at": "2023-06-02T14:22:45.000000Z",
+    "updated_at": "2023-06-02T14:22:45.000000Z"
+}
+```
+
+## Editar um pedido
+- Rota: http://localhost/requests/{id}
+- Método: PUT
+
+## Deletar um pedido
+- Rota: http://localhost/requests/{id}
+- Método: DELETE
