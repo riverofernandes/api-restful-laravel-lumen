@@ -18,7 +18,7 @@ class ProductController extends Controller
             return response()->json([], 204);
         }
 
-        return response()->json($products);
+        return response()->json($products, 200);
     }
 
     public function store(Request $request): JsonResponse
@@ -33,8 +33,8 @@ class ProductController extends Controller
         $name = $file->getBasename() . '.' . $file->getClientOriginalExtension();
         $file->move('upload/', $name);
 
-        $product = new Product;
-        $product->name = $request->name;
+        $product        = new Product;
+        $product->name  = $request->name;
         $product->price = $request->price;
         $product->image =  URL::asset('upload/' . $name);
         $product->save();
@@ -53,8 +53,8 @@ class ProductController extends Controller
             'price' => 'numeric',
             'image' => 'image|mimes:png,jpg,jpeg'
         ]);
-        $product = Product::findOrFail($id);
-        $product->name = $request->name;
+        $product        = Product::findOrFail($id);
+        $product->name  = $request->name;
         $product->price = $request->price;
 
         if ($request->hasFile('image')) {
